@@ -4,9 +4,36 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
+//error message hidden
+const errorMessage = document.getElementById('modal')
+errorMessage.className = 'hidden'
 
+const love = document.getElementsByClassName('like-glyph')
+const errorSection = document.getElementById('modal-message')
 
+for (const btn of love) {
+  btn.addEventListener('click', () => {
+    mimicServerCall()
 
+      .then(() => {
+        if (btn.className === 'activated-heart') {
+          btn.textContent = EMPTY_HEART
+          btn.classList.remove('activated-heart')
+      } else {
+        btn.textContent = FULL_HEART
+        btn.className = 'activated-heart'
+      }  
+      })
+      .catch((errors) => {
+        errorMessage.removeAttribute('class')
+        errorMessage.textContent = errors
+     
+        setTimeout(() => {
+          errors.setAttribute('class', 'hidden') }, 4000)
+
+      })  
+      })
+  }
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
 //------------------------------------------------------------------------------
